@@ -1,0 +1,100 @@
+﻿<Window x:Class="MusicPlayer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        Title="MuS - v.1.0" Height="400" Width="535" Background="#121212" Foreground="#444444"
+        Icon="muslogo.ico">
+    <Window.Resources>
+        <Style TargetType="ListBox">
+            <Setter Property="Background" Value="#1E1E1E"/>
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+            <Setter Property="BorderBrush" Value="#444444"/>
+            <Setter Property="BorderThickness" Value="1"/>
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#1E1E1E"/>
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+            <Setter Property="BorderBrush" Value="#444444"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="5,10"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#444444"/>
+                    <Setter Property="Foreground" Value="#444444"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="ProgressBar">
+            <Setter Property="Background" Value="#444444"/>
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+        </Style>
+
+        <Style TargetType="ListBoxItem">
+            <Setter Property="Background" Value="#1E1E1E"/>
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+            <Setter Property="BorderBrush" Value="#444444"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="#444444"/>
+                    <Setter Property="Foreground" Value="#FFFFFF"/>
+                </Trigger>
+                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="{x:Static sys:String.Empty}">
+                    <Setter Property="Background" Value="#444444"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="Slider">
+            <Setter Property="Background" Value="#1E1E1E"/>
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+        </Style>
+
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10">
+            <ListBox x:Name="MusicList" Height="200" Width="500" Margin="0,0,0,10"
+                     SelectionChanged="MusicList_SelectionChanged">
+                <ListBox.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Переименовать" Click="RenameMenuItem_Click"/>
+                        <MenuItem Header="Удалить" Click="DeleteMenuItem_Click"/>
+                    </ContextMenu>
+                </ListBox.ContextMenu>
+            </ListBox>
+            <Button x:Name="AddButton" Content="Добавить" Click="AddButton_Click" HorizontalAlignment="Right" Margin="0,0,0,10"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="10">
+            <Button x:Name="PlayPauseButton" Content="Пауза" Click="PlayPauseButton_Click" Margin="0,0,10,0"/>
+            <Button x:Name="OrderShuffleButton" Content="По порядку" Click="OrderShuffleButton_Click"/>
+        </StackPanel>
+
+        <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,220,0,0">
+            <TextBlock x:Name="CurrentSongTextBlock" FontWeight="Bold" FontSize="14" Width="250" TextTrimming="CharacterEllipsis"/>
+            <TextBlock x:Name="ElapsedTimeTextBlock" FontSize="12" Margin="0,5,0,5" Visibility="Collapsed"/>
+            <ProgressBar x:Name="ProgressBar" MouseLeftButtonDown="ProgressBar_MouseLeftButtonDown" Minimum="0" Maximum="100" Height="20" Width="250" Visibility="Collapsed"/>
+        </StackPanel>
+
+        <Slider x:Name="VolumeSlider" Minimum="0" Maximum="1" Value="0.5" 
+                HorizontalAlignment="Right" Width="200" Margin="10,280,0,0" VerticalAlignment="Top"
+                ValueChanged="VolumeSlider_ValueChanged"/>
+        <Label Content="Громкость" HorizontalAlignment="Right" Margin="10,255,0,0" VerticalAlignment="Top" Foreground="#FFFFFF"/>
+    </Grid>
+</Window>
